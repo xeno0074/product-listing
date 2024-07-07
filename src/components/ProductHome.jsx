@@ -3,21 +3,32 @@ import Filter from "./Filter";
 import ProductList from "./ProductsList";
 
 function ProductHome() {
-    const url = 'https://fakestoreapi.com/products';
+    const fakeStoreApi = 'https://fakestoreapi.com/products';
 
+    const [url, setUrl] = useState(fakeStoreApi);
     const [products, setProducts] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState('');
-
-    const fetchProducts = async (url) => {
-        const response = await fetch(url);
-        const data = await response.json();
-        setProducts(data);
-    };
+    const [selectedCategory, setSelectedCategory] = useState(null);
 
     useEffect(() => {
-        let filterUrl = url + selectedCategory;
-        fetchProducts(filterUrl);
+        if(selectedCategory){
+            setUrl(fakeStoreApi + '/category/' + selectedCategory);
+
+            let base_url = 'http://192.168.0.119:3000/';
+            let path = base_url + '?category=' + selectedCategory;
+
+            window.history.replaceState(null, '', path);
+        }
     }, [selectedCategory]);
+
+    useEffect(() => {
+        const fetchProducts = async (url) => {
+            const response = await fetch(url);
+            const data = await response.json();
+            setProducts(data);
+        };
+
+        fetchProducts(url);
+    }, [url]);
 
     return (
         <div>

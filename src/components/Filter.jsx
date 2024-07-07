@@ -3,7 +3,15 @@ import './Filter.css'
 import './Product.css'
 
 function Filter({selectedCategory, setSelectedCategory}) {
+    // useEffect(()=>{
+    //     let base_url = document.URL;
+    //     let path = base_url + '?category=' + selectedCategory;
 
+    //     console.log(selectedCategory);
+    //     console.log(base_url);
+    //     console.log(path);
+
+    // }, [selectedCategory])
 
     return (
         <div className='filter-box'>
@@ -30,7 +38,7 @@ function CategoryFilter({selectedCategory, setSelectedCategory}) {
     }, []);
 
     const handleClick = (e) => {
-        setSelectedCategory('/category/' + e.target.value);
+        setSelectedCategory(e.target.value);
     };
 
     const categoryFilters = allCategories.map((category) => {
